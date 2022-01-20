@@ -3,9 +3,26 @@
 
 ## 一面
 ### 常见的属性修饰符有哪些，使用copy应该注意些什么
+难度 ⭐️
+nonnull, nullable 兼容Swift Optional
+assign, weak, strong, copy, retain, unsafe_retain 引用计数相关
+atomic, nonatomic 线程安全
+readwrite, readonly 读写权限
+getter, setter 方法命名
+
+copy的注意点：
+1. copy得到是不可变对象，即使你声明的是可变对象
+2. copy的时候要区分对象或者集合对象
+集合对象是单层深拷贝，这个要注意。
+3. 还有一个可能就是block的copy,不过这个是从MRC遗留的做法，现在无论是不是copy,在需要的时候都会copy到堆上
+
+
 ### 深拷贝和浅拷贝区别
+
 ### atomic 真的安全么，加的锁是哪种锁
+
 ### iOS中内存管理是怎么样的 
+
 ### 自动释放池原理，本质
 ### 常见的内存泄漏有哪些
 ### block 出现循环引用的原因
