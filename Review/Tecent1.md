@@ -5,9 +5,13 @@
 ### 常见的属性修饰符有哪些，使用copy应该注意些什么
 难度 ⭐️
 nonnull, nullable 兼容Swift Optional
+
 assign, weak, strong, copy, retain, unsafe_retain 引用计数相关
+
 atomic, nonatomic 线程安全
+
 readwrite, readonly 读写权限
+
 getter, setter 方法命名
 
 copy的注意点：
@@ -18,6 +22,8 @@ copy的注意点：
 
 
 ### 深拷贝和浅拷贝区别
+
+
 
 ### atomic 真的安全么，加的锁是哪种锁
 
