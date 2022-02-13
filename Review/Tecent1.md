@@ -58,9 +58,45 @@ while (抢锁(lock) == 没抢到) {
 
 ### iOS中内存管理是怎么样的 
 
+难度 ⭐️
 
+主流语言的内存管理一般分为2种
+
+1. GC垃圾回收机制
+2. Ref引用计数
+
+iOS端采用了引用计数的方式
+
+retain == +1
+release == -1
+
+当ref count = 0的时候即释放内存。
+
+当然还有 autoRelease，因为部分对象需要脱离当前上下文使用，需要延迟释放。autoRelase的本质就是把对象加到autoRleasePool当中，autoReleasePool会等到下次Runloop释放当前pool内所有内存。
 
 ### 自动释放池原理，本质
+
+autoReleasePool一般分为两块来讲
+ 
+ 1. 本身的数据结构
+ autoReleasePage双向链表，page种指针栈，
+ 分为2种指针，一种`POOL_BOUNDARY`的哨兵对象，来判断pop的位置，还有一种就是需要释放的指针对象
+ ![](media/16447443827324.jpg)
+
+ 
+ 1. 管理内存的流程
+ 具体管理内存的流程，就要结果runloop来分析，runloop唤醒的时候会会进行常见page对象进行push操作压入哨兵对象，休眠时候会pop操作释放需要释放的对象。
+
+在objc源码种注释
+>   Autorelease pool implementation
+> A thread's autorelease pool is a stack of pointers.
+   Each pointer is either an object to release, or POOL_BOUNDARY which is
+	 an autorelease pool boundary.
+   A pool token is a pointer to the POOL_BOUNDARY for that pool. When the pool is popped, every object hotter than the sentinel is released.
+   The stack is divided into a doubly-linked list of pages. Pages are added and deleted as necessary.
+   Thread-local storage points to the hot page, where newly autoreleased objects are stored.
+ 
+
 ### 常见的内存泄漏有哪些
 ### block 出现循环引用的原因
 ### 线程和runloop之间的关系是怎么样的
